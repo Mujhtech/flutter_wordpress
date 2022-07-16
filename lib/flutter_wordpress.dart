@@ -128,10 +128,11 @@ class WordPress {
       'password': password,
     };
 
-    final response = await http.post(
-      Uri.parse(_baseUrl + URL_JWT_TOKEN),
-      body: body,
-    );
+    final response = await http
+        .post(Uri.parse(_baseUrl + URL_JWT_TOKEN), body: body, headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    });
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       JWTResponse authResponse = JWTResponse.fromJson(
@@ -159,7 +160,11 @@ class WordPress {
 
     final response = await http.post(
       Uri.parse(_baseUrl + URL_JWT_TOKEN_VALIDATE),
-      headers: _urlHeader,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        ..._urlHeader
+      },
     );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
